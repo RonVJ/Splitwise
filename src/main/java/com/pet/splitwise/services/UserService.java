@@ -1,6 +1,7 @@
 package com.pet.splitwise.services;
 
 import com.pet.splitwise.exceptions.UserAlreadyExistsException;
+import com.pet.splitwise.exceptions.UserDoesNotExistException;
 import com.pet.splitwise.models.User;
 import com.pet.splitwise.models.UserStatus;
 import com.pet.splitwise.repositories.UserRepository;
@@ -48,6 +49,22 @@ public class UserService {
         user.setPhoneNumber(phoneNumber);
         user.setName(userName);
         user.setUserStatus(UserStatus.ACTIVE);
+
+        return userRepository.save(user);
+    }
+
+    public User updateProfile(String userName
+            , String password) throws UserDoesNotExistException {
+        System.out.println("username " + userName);
+        System.out.println("password " + password);
+        Optional<User> userOptional = userRepository.findByName(userName);
+        User user;
+        if(userOptional.isEmpty()) {
+            throw new UserDoesNotExistException();
+        }
+
+        user = userOptional.get();
+        user.setPassword(password);
 
         return userRepository.save(user);
     }

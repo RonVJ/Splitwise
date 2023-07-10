@@ -33,14 +33,14 @@ public class RegisterUserCommand implements Command{
     public void execute(String input) {
         List<String> inputWords = Arrays.stream(input.split(" ")).toList();
 
-        String password = inputWords.get(1);
+        String userName = inputWords.get(1);
         String phoneNumber = inputWords.get(2);
-        String username = inputWords.get(3);
+        String password = inputWords.get(3);
 
         RegisterUserRequestDto request = new RegisterUserRequestDto();
 
 
-        request.setUserName(username);
+        request.setUserName(userName);
         request.setPassword(password);
         request.setPhoneNumber(phoneNumber);
 

@@ -14,11 +14,13 @@ public class CommandRegistry {
     @Autowired
     public CommandRegistry(RegisterUserCommand registerUserCommand
             , UpdateProfileCommand updateProfileCommand
-            , SettleUpUserCommand settleUpUserCommand) {
+            , SettleUpUserCommand settleUpUserCommand
+            , SettleUpGroupCommand settleUpGroupCommand) {
         commands = new ArrayList<>();
         commands.add(registerUserCommand);
         commands.add(updateProfileCommand);
         commands.add(settleUpUserCommand);
+        commands.add(settleUpGroupCommand);
     }
 
     public void execute(String input) {

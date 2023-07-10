@@ -1,7 +1,8 @@
 package com.pet.splitwise.commands;
 
 import com.pet.splitwise.controllers.ExpenseController;
-import com.pet.splitwise.dtos.*;
+import com.pet.splitwise.dtos.SettleUpGroupRequestDto;
+import com.pet.splitwise.dtos.SettleUpGroupResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,11 +10,11 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class SettleUpUserCommand implements Command{
+public class SettleUpGroupCommand implements Command{
     private ExpenseController expenseController;
 
     @Autowired
-    public SettleUpUserCommand(ExpenseController expenseController) {
+    public SettleUpGroupCommand(ExpenseController expenseController) {
         this.expenseController = expenseController;
     }
 
@@ -21,7 +22,7 @@ public class SettleUpUserCommand implements Command{
     public boolean matches(String input) {
         List<String> inputWords = Arrays.stream(input.split(" ")).toList();
 
-        if(inputWords.size() == 2 && inputWords.get(1).equalsIgnoreCase(CommandKeywords.SETTLE_UP_USER) ) {
+        if(inputWords.size() == 3 && inputWords.get(1).equalsIgnoreCase(CommandKeywords.SETTLE_UP_GROUP) ) {
             return true;
         }
         return false;
@@ -31,12 +32,12 @@ public class SettleUpUserCommand implements Command{
     public void execute(String input) {
         List<String> inputWords = Arrays.stream(input.split(" ")).toList();
 
-        Long userId = Long.parseLong(inputWords.get(0));
+        Long groupId = Long.parseLong(inputWords.get(2));
 
-        SettleUpUserRequestDto request = new SettleUpUserRequestDto();
-        request.setUserId(userId);
+        SettleUpGroupRequestDto request = new SettleUpGroupRequestDto();
+        request.setGroupId(groupId);
 
         // call user controller
-        SettleUpUserResponseDto response = expenseController.settleUpUser(request);
+        SettleUpGroupResponseDto response = expenseController.settleUpGroup(request);
     }
 }
